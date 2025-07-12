@@ -1,0 +1,920 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2025-07-11T15:00:00.000Z",
+  "__export_source": "insomnia.desktop.app:v2023.5.8",
+  "resources": [
+    {
+      "_id": "req_auth_register",
+      "parentId": "fld_auth_service",
+      "modified": 1691756400000,
+      "created": 1691756400000,
+      "url": "{{ _.base_url }}/auth/register",
+      "name": "Register User",
+      "description": "Register a new user in the system",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"João Silva\",\n  \"email\": \"joao@test.com\",\n  \"password\": \"Senha123456\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1691756400000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_auth_login",
+      "parentId": "fld_auth_service",
+      "modified": 1691756400000,
+      "created": 1691756400000,
+      "url": "{{ _.base_url }}/auth/login",
+      "name": "Login User",
+      "description": "Login user and get JWT tokens",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"joao@test.com\",\n  \"password\": \"Senha123456\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1691756390000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_auth_refresh",
+      "parentId": "fld_auth_service",
+      "modified": 1691756400000,
+      "created": 1691756400000,
+      "url": "{{ _.base_url }}/auth/refresh",
+      "name": "Refresh Token",
+      "description": "Refresh access token using refresh token",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"refreshToken\": \"{{ _.refresh_token }}\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1691756380000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_auth_profile",
+      "parentId": "fld_auth_service",
+      "modified": 1691756400000,
+      "created": 1691756400000,
+      "url": "{{ _.base_url }}/auth/profile",
+      "name": "Get User Profile",
+      "description": "Get authenticated user profile",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}"
+      },
+      "metaSortKey": -1691756370000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_auth_validate",
+      "parentId": "fld_auth_service",
+      "modified": 1691756400000,
+      "created": 1691756400000,
+      "url": "{{ _.base_url }}/auth/validate",
+      "name": "Validate Token",
+      "description": "Validate JWT token",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}"
+      },
+      "metaSortKey": -1691756360000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_video_upload",
+      "parentId": "fld_video_service",
+      "modified": 1691756400000,
+      "created": 1691756400000,
+      "url": "{{ _.video_url }}/video/upload",
+      "name": "Upload Video",
+      "description": "Upload a video file for processing",
+      "method": "POST",
+      "body": {
+        "mimeType": "multipart/form-data",
+        "params": [
+          {
+            "id": "pair_video_file",
+            "name": "video",
+            "value": "",
+            "description": "Video file to upload (mp4, avi, mov, mkv)",
+            "type": "file",
+            "fileName": ""
+          }
+        ]
+      },
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}"
+      },
+      "metaSortKey": -1691756400000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_video_process",
+      "parentId": "fld_video_service",
+      "modified": 1691756400000,
+      "created": 1691756400000,
+      "url": "{{ _.video_url }}/video/{{ _.video_id }}/process",
+      "name": "Process Video",
+      "description": "Start video processing with custom options",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"videoId\": \"{{ _.video_id }}\",\n  \"framesPerSecond\": 1,\n  \"outputFormat\": \"jpg\",\n  \"compressionQuality\": 95,\n  \"priority\": 5\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}"
+      },
+      "metaSortKey": -1691756390000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_video_status",
+      "parentId": "fld_video_service",
+      "modified": 1691756400000,
+      "created": 1691756400000,
+      "url": "{{ _.video_url }}/video/{{ _.video_id }}/status",
+      "name": "Get Video Status",
+      "description": "Get video processing status",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}"
+      },
+      "metaSortKey": -1691756380000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_video_download",
+      "parentId": "fld_video_service",
+      "modified": 1691756400000,
+      "created": 1691756400000,
+      "url": "{{ _.video_url }}/video/{{ _.video_id }}/download",
+      "name": "Get Download URL",
+      "description": "Get presigned download URL for processed video",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}"
+      },
+      "metaSortKey": -1691756370000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_video_download_redirect",
+      "parentId": "fld_video_service",
+      "modified": 1691756400000,
+      "created": 1691756400000,
+      "url": "{{ _.video_url }}/video/{{ _.video_id }}/download-redirect",
+      "name": "Download Video (Redirect)",
+      "description": "Direct download with redirect to S3",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}"
+      },
+      "metaSortKey": -1691756360000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_video_user_videos",
+      "parentId": "fld_video_service",
+      "modified": 1691756400000,
+      "created": 1691756400000,
+      "url": "{{ _.video_url }}/video/user/{{ _.user_id }}",
+      "name": "Get User Videos",
+      "description": "Get all videos for a specific user",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "id": "pair_status_param",
+          "name": "status",
+          "value": "completed",
+          "description": "Filter by status: pending, processing, completed, failed"
+        },
+        {
+          "id": "pair_limit_param",
+          "name": "limit",
+          "value": "10",
+          "description": "Number of results to return"
+        },
+        {
+          "id": "pair_offset_param",
+          "name": "offset",
+          "value": "0",
+          "description": "Offset for pagination"
+        }
+      ],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}"
+      },
+      "metaSortKey": -1691756350000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_video_stats",
+      "parentId": "fld_video_service",
+      "modified": 1691756400000,
+      "created": 1691756400000,
+      "url": "{{ _.video_url }}/video/stats",
+      "name": "Get Processing Stats",
+      "description": "Get overall processing statistics",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}"
+      },
+      "metaSortKey": -1691756340000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_notification_send",
+      "parentId": "fld_notification_service",
+      "modified": 1691756400000,
+      "created": 1691756400000,
+      "url": "{{ _.notification_url }}/notifications/send",
+      "name": "Send Notification",
+      "description": "Send a custom notification",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"userId\": \"{{ _.user_id }}\",\n  \"type\": \"EMAIL\",\n  \"title\": \"Test Notification\",\n  \"message\": \"This is a test notification\",\n  \"data\": {\n    \"customField\": \"customValue\"\n  }\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}"
+      },
+      "metaSortKey": -1691756400000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_notification_list",
+      "parentId": "fld_notification_service",
+      "modified": 1691756400000,
+      "created": 1691756400000,
+      "url": "{{ _.notification_url }}/notifications",
+      "name": "List Notifications",
+      "description": "Get user notifications with pagination",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "id": "pair_user_id",
+          "name": "userId",
+          "value": "{{ _.user_id }}",
+          "description": "User ID to get notifications for"
+        },
+        {
+          "id": "pair_page",
+          "name": "page",
+          "value": "1",
+          "description": "Page number"
+        },
+        {
+          "id": "pair_limit",
+          "name": "limit",
+          "value": "10",
+          "description": "Number of notifications per page"
+        },
+        {
+          "id": "pair_status",
+          "name": "status",
+          "value": "SENT",
+          "description": "Filter by status: PENDING, SENT, FAILED"
+        }
+      ],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}"
+      },
+      "metaSortKey": -1691756390000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_notification_get",
+      "parentId": "fld_notification_service",
+      "modified": 1691756400000,
+      "created": 1691756400000,
+      "url": "{{ _.notification_url }}/notifications/{{ _.notification_id }}",
+      "name": "Get Notification",
+      "description": "Get specific notification by ID",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.access_token }}"
+      },
+      "metaSortKey": -1691756380000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_notification_test_complete",
+      "parentId": "fld_notification_service",
+      "modified": 1691756400000,
+      "created": 1691756400000,
+      "url": "{{ _.notification_url }}/notifications/test-video-complete",
+      "name": "Test Video Complete Notification",
+      "description": "Test video processing complete notification",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"userId\": \"{{ _.user_id }}\",\n  \"videoId\": \"test-video-123\",\n  \"downloadUrl\": \"https://example.com/download/test-video-123.zip\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1691756370000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_notification_test_failed",
+      "parentId": "fld_notification_service",
+      "modified": 1691756400000,
+      "created": 1691756400000,
+      "url": "{{ _.notification_url }}/notifications/test-video-failed",
+      "name": "Test Video Failed Notification",
+      "description": "Test video processing failed notification",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"userId\": \"{{ _.user_id }}\",\n  \"videoId\": \"test-video-123\",\n  \"error\": \"Failed to process video: Invalid format\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1691756360000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_queue_create",
+      "parentId": "fld_queue_service",
+      "modified": 1691756400000,
+      "created": 1691756400000,
+      "url": "{{ _.queue_url }}/queue/jobs",
+      "name": "Create Job",
+      "description": "Create a new job in the queue",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"queueName\": \"video-processing\",\n  \"data\": {\n    \"videoId\": \"test-video-123\",\n    \"userId\": \"{{ _.user_id }}\",\n    \"processingOptions\": {\n      \"framesPerSecond\": 1,\n      \"outputFormat\": \"jpg\"\n    }\n  },\n  \"options\": {\n    \"priority\": 5,\n    \"attempts\": 3,\n    \"delay\": 0\n  }\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1691756400000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_queue_list",
+      "parentId": "fld_queue_service",
+      "modified": 1691756400000,
+      "created": 1691756400000,
+      "url": "{{ _.queue_url }}/queue/jobs",
+      "name": "List Jobs",
+      "description": "List jobs in queue with filters",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "id": "pair_queue_name",
+          "name": "queueName",
+          "value": "video-processing",
+          "description": "Queue name to filter jobs"
+        },
+        {
+          "id": "pair_status",
+          "name": "status",
+          "value": "completed",
+          "description": "Job status: waiting, active, completed, failed, delayed"
+        },
+        {
+          "id": "pair_limit",
+          "name": "limit",
+          "value": "10",
+          "description": "Number of jobs to return"
+        },
+        {
+          "id": "pair_offset",
+          "name": "offset",
+          "value": "0",
+          "description": "Offset for pagination"
+        }
+      ],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1691756390000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_queue_get",
+      "parentId": "fld_queue_service",
+      "modified": 1691756400000,
+      "created": 1691756400000,
+      "url": "{{ _.queue_url }}/queue/jobs/{{ _.job_id }}",
+      "name": "Get Job",
+      "description": "Get specific job details",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1691756380000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_queue_retry",
+      "parentId": "fld_queue_service",
+      "modified": 1691756400000,
+      "created": 1691756400000,
+      "url": "{{ _.queue_url }}/queue/jobs/{{ _.job_id }}/retry",
+      "name": "Retry Job",
+      "description": "Retry a failed job",
+      "method": "POST",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1691756370000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_queue_stats",
+      "parentId": "fld_queue_service",
+      "modified": 1691756400000,
+      "created": 1691756400000,
+      "url": "{{ _.queue_url }}/queue/stats",
+      "name": "Get Queue Stats",
+      "description": "Get queue statistics",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "id": "pair_queue_name",
+          "name": "queueName",
+          "value": "video-processing",
+          "description": "Queue name to get stats for"
+        }
+      ],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1691756360000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_health_auth",
+      "parentId": "fld_health_checks",
+      "modified": 1691756400000,
+      "created": 1691756400000,
+      "url": "{{ _.base_url }}/health",
+      "name": "Auth Service Health",
+      "description": "Check auth service health",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1691756400000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_health_video",
+      "parentId": "fld_health_checks",
+      "modified": 1691756400000,
+      "created": 1691756400000,
+      "url": "{{ _.video_url }}/health",
+      "name": "Video Service Health",
+      "description": "Check video service health",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1691756390000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_health_notification",
+      "parentId": "fld_health_checks",
+      "modified": 1691756400000,
+      "created": 1691756400000,
+      "url": "{{ _.notification_url }}/health",
+      "name": "Notification Service Health",
+      "description": "Check notification service health",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1691756380000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_health_queue",
+      "parentId": "fld_health_checks",
+      "modified": 1691756400000,
+      "created": 1691756400000,
+      "url": "{{ _.queue_url }}/health",
+      "name": "Queue Service Health",
+      "description": "Check queue service health",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1691756370000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_auth_service",
+      "parentId": "wrk_main",
+      "modified": 1691756400000,
+      "created": 1691756400000,
+      "name": "🔐 Auth Service",
+      "description": "Authentication and user management endpoints",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1691756400000,
+      "_type": "request_group"
+    },
+    {
+      "_id": "fld_video_service",
+      "parentId": "wrk_main",
+      "modified": 1691756400000,
+      "created": 1691756400000,
+      "name": "🎬 Video Processing Service",
+      "description": "Video upload, processing, and download endpoints",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1691756390000,
+      "_type": "request_group"
+    },
+    {
+      "_id": "fld_notification_service",
+      "parentId": "wrk_main",
+      "modified": 1691756400000,
+      "created": 1691756400000,
+      "name": "🔔 Notification Service",
+      "description": "Email and push notification endpoints",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1691756380000,
+      "_type": "request_group"
+    },
+    {
+      "_id": "fld_queue_service",
+      "parentId": "wrk_main",
+      "modified": 1691756400000,
+      "created": 1691756400000,
+      "name": "⚡ Queue Service",
+      "description": "Job queue management endpoints",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1691756370000,
+      "_type": "request_group"
+    },
+    {
+      "_id": "fld_health_checks",
+      "parentId": "wrk_main",
+      "modified": 1691756400000,
+      "created": 1691756400000,
+      "name": "🏥 Health Checks",
+      "description": "Service health monitoring endpoints",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1691756360000,
+      "_type": "request_group"
+    },
+    {
+      "_id": "env_main",
+      "parentId": "wrk_main",
+      "modified": 1691756400000,
+      "created": 1691756400000,
+      "name": "Base Environment",
+      "data": {
+        "base_url": "http://localhost:3006",
+        "video_url": "http://localhost:3002",
+        "notification_url": "http://localhost:3004",
+        "queue_url": "http://localhost:3003",
+        "access_token": "",
+        "refresh_token": "",
+        "user_id": "",
+        "video_id": "",
+        "notification_id": "",
+        "job_id": ""
+      },
+      "dataPropertyOrder": {
+        "&": [
+          "base_url",
+          "video_url",
+          "notification_url",
+          "queue_url",
+          "access_token",
+          "refresh_token",
+          "user_id",
+          "video_id",
+          "notification_id",
+          "job_id"
+        ]
+      },
+      "color": null,
+      "isPrivate": false,
+      "metaSortKey": 1691756400000,
+      "_type": "environment"
+    },
+    {
+      "_id": "jar_main",
+      "parentId": "wrk_main",
+      "modified": 1691756400000,
+      "created": 1691756400000,
+      "name": "Default Jar",
+      "cookies": [],
+      "_type": "cookie_jar"
+    },
+    {
+      "_id": "spc_main",
+      "parentId": "wrk_main",
+      "modified": 1691756400000,
+      "created": 1691756400000,
+      "fileName": "Video Platform Microservices",
+      "contents": "",
+      "contentType": "yaml",
+      "_type": "api_spec"
+    },
+    {
+      "_id": "wrk_main",
+      "parentId": null,
+      "modified": 1691756400000,
+      "created": 1691756400000,
+      "name": "🎬 Video Platform Microservices",
+      "description": "Complete API collection for the Video Processing Platform with Auth, Video Processing, Notifications, and Queue services.\n\n## Quick Start\n1. Start services: `docker-compose up -d`\n2. Register user in Auth Service\n3. Login to get JWT token\n4. Upload video in Video Service\n5. Process video\n6. Monitor notifications\n\n## Environment Variables\n- Update the Base Environment with your actual service URLs\n- Set access_token after login\n- Set user_id, video_id for subsequent requests\n\n## Services:\n- **Auth Service** (Port 3006): User authentication and JWT tokens\n- **Video Service** (Port 3002): Video upload, processing, and download\n- **Notification Service** (Port 3004): Email and push notifications\n- **Queue Service** (Port 3003): Job queue management\n\n## Workflow:\n1. Register/Login → Get JWT token\n2. Upload video → Get video ID\n3. Start processing → Monitor status\n4. Receive notifications → Download results",
+      "scope": "collection",
+      "_type": "workspace"
+    }
+  ]
+}

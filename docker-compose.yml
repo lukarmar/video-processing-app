@@ -1,0 +1,241 @@
+services:
+  auth-db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: auth_service
+      POSTGRES_USER: auth_user
+      POSTGRES_PASSWORD: auth_password
+    ports:
+      - "5433:5432"
+    volumes:
+      - auth_db_data:/var/lib/postgresql/data
+    networks:
+      - video-platform
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U auth_user -d auth_service"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  video-db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: video_service
+      POSTGRES_USER: video_user
+      POSTGRES_PASSWORD: video_password
+    ports:
+      - "5434:5432"
+    volumes:
+      - video_db_data:/var/lib/postgresql/data
+    networks:
+      - video-platform
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U video_user -d video_service"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+
+
+  notification-db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: notification_service
+      POSTGRES_USER: notification_user
+      POSTGRES_PASSWORD: notification_password
+    ports:
+      - "5436:5432"
+    volumes:
+      - notification_db_data:/var/lib/postgresql/data
+    networks:
+      - video-platform
+    healthcheck:
+      test:
+        ["CMD-SHELL", "pg_isready -U notification_user -d notification_service"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - video-platform
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--web.console.libraries=/etc/prometheus/console_libraries"
+      - "--web.console.templates=/etc/prometheus/consoles"
+      - "--web.enable-lifecycle"
+    networks:
+      - video-platform
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana_data:/var/lib/grafana
+    depends_on:
+      - prometheus
+    networks:
+      - video-platform
+
+  localstack:
+    image: localstack/localstack:latest
+    ports:
+      - "4566:4566"
+    environment:
+      - SERVICES=sqs,s3,sns,ses
+      - DEBUG=1
+      - DATA_DIR=/tmp/localstack/data
+      - LAMBDA_EXECUTOR=local
+      - SKIP_INFRA_DOWNLOADS=1
+    networks:
+      - video-platform
+    volumes:
+      - ./localstack/init-scripts:/etc/localstack/init
+    entrypoint: /bin/sh -c "chmod +x /etc/localstack/init/ready.d/*.sh && docker-entrypoint.sh"
+  
+  auth-service:
+    build:
+      context: ./services/auth-service
+      dockerfile: Dockerfile
+    ports:
+      - "3006:3006"
+    environment:
+      - NODE_ENV=development
+      - PORT=3006
+      - DATABASE_URL=postgresql://auth_user:auth_password@auth-db:5432/auth_service
+      - DB_HOST=auth-db
+      - DB_PORT=5432
+      - DB_NAME=auth_service
+      - DB_USERNAME=auth_user
+      - DB_PASSWORD=auth_password
+      - REDIS_URL=redis://redis:6379
+      - JWT_SECRET=dev-secret-key-for-testing
+    depends_on:
+      auth-db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - video-platform
+
+  video-processing-service:
+    build:
+      context: ./services/video-processing-service
+      dockerfile: Dockerfile
+    ports:
+      - "3002:3002"
+    volumes:
+      - video_uploads:/app/uploads
+      - video_storage:/app/storage
+    environment:
+      - NODE_ENV=development
+      - PORT=3002
+      - DATABASE_URL=postgresql://video_user:video_password@video-db:5432/video_service
+      - DB_HOST=video-db
+      - DB_PORT=5432
+      - DB_NAME=video_service
+      - DB_USERNAME=video_user
+      - DB_PASSWORD=video_password
+      - REDIS_URL=redis://redis:6379
+      - JWT_SECRET=dev-secret-key-for-testing
+      - SQS_ENDPOINT=http://localstack:4566
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+      - AWS_REGION=us-east-1
+      - AWS_S3_BUCKET=video-processing-bucket
+      - AUTH_SERVICE_URL=http://auth-service:3006
+    depends_on:
+      video-db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - video-platform
+
+
+
+  notification-service:
+    build:
+      context: ./services/notification-service
+      dockerfile: Dockerfile
+    ports:
+      - "3004:3004"
+    environment:
+      - NODE_ENV=development
+      - PORT=3004
+      - DATABASE_URL=postgresql://notification_user:notification_password@notification-db:5432/notification_service
+      - DATABASE_HOST=notification-db
+      - DATABASE_PORT=5432
+      - DATABASE_NAME=notification_service
+      - DATABASE_USERNAME=notification_user
+      - DATABASE_PASSWORD=notification_password
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - JWT_SECRET=dev-secret-key-for-testing
+      # SMTP Configuration for Development
+      - SMTP_HOST=smtp.gmail.com
+      - SMTP_PORT=587
+      - SMTP_USER=
+      - SMTP_PASS=
+      # AWS Configuration (for production/staging)
+      - AWS_REGION=us-east-1
+      - AWS_ACCESS_KEY_ID=
+      - AWS_SECRET_ACCESS_KEY=
+      - AWS_SNS_ENDPOINT=http://localstack:4566
+      - AWS_SES_ENDPOINT=http://localstack:4566
+      - AWS_SNS_IOS_APP_ARN=
+      - AWS_SNS_ANDROID_APP_ARN=
+      - SES_FROM_EMAIL=noreply@videoplat.com
+      # Legacy configurations
+      - EMAIL_FROM=noreply@hackaton.com
+      - TWILIO_ACCOUNT_SID=your-account-sid
+      - TWILIO_AUTH_TOKEN=your-auth-token
+      - TWILIO_PHONE_NUMBER=+1234567890
+      - WEBHOOK_TIMEOUT=5000
+      - WEBHOOK_RETRIES=3
+      - AUTH_SERVICE_URL=http://auth-service:3006
+    depends_on:
+      notification-db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - video-platform
+
+
+
+volumes:
+  auth_db_data:
+  video_db_data:
+  notification_db_data:
+  redis_data:
+  grafana_data:
+  video_uploads:
+  video_storage:
+
+networks:
+  video-platform:
+    driver: bridge

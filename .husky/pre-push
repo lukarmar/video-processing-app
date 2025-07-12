@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "🚀 Running pre-push checks..."
+
+# Run quality gate
+echo "🔍 Running quality gate..."
+./scripts/quality-gate.sh
+
+echo "✅ Pre-push checks passed!"
