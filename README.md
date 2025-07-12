@@ -164,16 +164,6 @@ curl http://localhost:3006/health
 ---
 
 
-### 🔍 SCRIPTS DE VALIDAÇÃO
-
-| Script                        | Função                            | Tempo | Uso                           |
-| ----------------------------- | --------------------------------- | ----- | ----------------------------- |
-| **validate-architecture.sh**  | Validação da arquitetura          | 2 min | `./validate-architecture.sh`  |
-| **test-e2e.sh**               | Teste end-to-end básico           | 3 min | `./test-e2e.sh`               |
-| **test-advanced-features.sh** | Teste completo de funcionalidades | 5 min | `./test-advanced-features.sh` |
-| **check-databases.sh**        | Verificação dos bancos            | 1 min | `./check-databases.sh`        |
-
-
 ## 📊 MONITORAMENTO E OBSERVABILIDADE
 
 ### 🎛️ DASHBOARDS PRINCIPAIS
@@ -315,10 +305,8 @@ npm run format
 
 | Serviço                  | URL                   | Função                     |
 | ------------------------ | --------------------- | -------------------------- |
-| **API Gateway**          | http://localhost:3001 | Ponto de entrada principal |
 | **Auth Service**         | http://localhost:3006 | Autenticação direta        |
 | **Video Service**        | http://localhost:3002 | Processamento de vídeo     |
-| **Queue Service**        | http://localhost:3003 | Gerenciamento de filas     |
 | **Notification Service** | http://localhost:3004 | Notificações               |
 | **Status Service**       | http://localhost:3005 | Status em tempo real       |
 
